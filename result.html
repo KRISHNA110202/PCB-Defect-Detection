@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Defect Detection Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .images-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            flex-basis: 30%;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .image-container h2 {
+            padding: 10px;
+            margin: 0;
+            background-color: #008CBA;
+            color: #fff;
+        }
+
+        .image-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .defects-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .defect {
+            margin-bottom: 10px;
+        }
+
+        .defect-name {
+            font-weight: bold;
+        }
+
+        .defect-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .back-button {
+            background-color: #008CBA;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #0076a3;
+        }
+
+        .developers {
+            margin-top: 20px;
+            text-align: right; /* Align the developers to the right */
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .developers:hover {
+            text-decoration: underline;
+        }
+
+        .developer-names {
+            margin-top: 10px;
+            display: none;
+            text-align: center; /* Align the developer names to the center */
+        }
+
+        .developer-names ol {
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .developer-names li {
+            list-style: none;
+            margin-bottom: 5px;
+            font-weight: bold; /* Make the developer names bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Defect Detection Result</h1>
+
+        <div class="images-container">
+            <div class="image-container">
+                <h2>Uploaded Image</h2>
+                <img src="{{ uploaded_image }}" alt="Uploaded Image">
+            </div>
+
+            <div class="image-container">
+                <h2>Defect Detection Image</h2>
+                <img src="{{ url_for('static', filename='results/result.png') }}" alt="Defect Detection Image">
+            </div>
+
+            <div class="image-container">
+                <h2>Defects Detected</h2>
+                <div class="defects-container">
+                    {% for defect in unique_defects %}
+                        <div class="defect">
+                            <span class="defect-color" style="background-color:{{ defect.color }}"></span>
+                            <span class="defect-name">{{ defect.name }}</span>
+                            <span class="defect-count">(Count: {{ defect.count }})</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <a href="/" class="back-button">Back to Home</a>
+        <div class="developers" onclick="toggleDeveloperNames()">Developers</div>
+        <div class="developer-names">
+            <ol>
+                <li>ARUL KUMAR ARK</li>
+                <li>SHREE KRISHNA KANTH S</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function toggleDeveloperNames() {
+            const developerNames = document.querySelector('.developer-names');
+            developerNames.style.display = developerNames.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
